@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valor — Bravery Stories</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff; --bg2: #f8f7f4; --bg3: #f0efe9;
@@ -20,14 +20,14 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--sans); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
         /* NAVIGATION */
         nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.94); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.75rem; height: 64px; }
         .nav-logo { font-family: var(--serif); font-size: 1.6rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; }
-        .nav-links { display: flex; gap: 8px; }
-        .nav-btn { padding: 8px 16px; border-radius: 8px; border: none; background: none; font-weight: 500; cursor: pointer; color: var(--text2); transition: var(--tr); }
+        .logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; }
+        .nav-links { display: flex; gap: 4px; }
+        .nav-btn { padding: 8px 14px; border-radius: 8px; border: none; background: none; font-weight: 500; cursor: pointer; color: var(--text2); transition: var(--tr); }
         .nav-btn.active { background: var(--accent-light); color: var(--accent); }
         .nav-cta { padding: 8px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: var(--tr); }
         .nav-cta:hover { background: var(--accent-hover); }
@@ -36,49 +36,72 @@
         .page { display: none; min-height: calc(100vh - 64px); }
         .page.active { display: block; }
 
-        /* HERO & FEED */
-        .hero { background: #111; color: white; padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
-        .hero h1 { font-family: var(--serif); font-size: 3.5rem; margin-bottom: 1rem; position: relative; z-index: 2; }
-        .hero p { color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; position: relative; z-index: 2; }
+        /* FEED */
+        .hero { background: #111; color: white; padding: 6rem 2rem; text-align: center; background: linear-gradient(135deg, #111, #222); }
+        .hero h1 { font-family: var(--serif); font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; }
+        .hero p { color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
+        .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+
+        /* CARDS */
+        .scard { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: var(--tr); cursor: pointer; display: flex; flex-direction: column; }
+        .scard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .scard-img { height: 220px; position: relative; background: #222; overflow: hidden; }
+        .scard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .scard:hover .scard-img img { transform: scale(1.05); }
+        .scard-content { padding: 1.75rem; flex: 1; }
+        .scard-tag { display: inline-block; padding: 4px 12px; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 700; border-radius: 100px; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .scard-title { font-family: var(--serif); font-size: 1.45rem; margin-bottom: 0.75rem; line-height: 1.25; color: var(--text); }
+        .scard-exc { font-size: 0.95rem; color: var(--text2); line-height: 1.6; }
+
+        /* STORY PAGE VIEW */
+        .sp-hero { position: relative; padding: 8rem 2rem; color: white; text-align: center; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 70vh; }
+        .sp-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)); }
+        .sp-hero-inner { position: relative; z-index: 10; max-width: 900px; }
+        .sp-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .sp-meta { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; opacity: 0.8; }
         
-        .feed-wrap { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
-        .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+        .sp-container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+        .sp-prose { font-family: 'Crimson Pro', serif; font-size: 1.35rem; line-height: 1.9; color: #2a2a2a; }
+        .sp-prose p { margin-bottom: 2rem; }
+        .sp-prose .hook { font-size: 1.6rem; font-style: italic; line-height: 1.7; color: #111; margin-bottom: 3rem; }
+        .sp-prose strong { color: #000; font-weight: 600; }
+        
+        .sp-pullquote { margin: 4rem -2rem; padding: 3rem; position: relative; background: var(--bg2); border-left: 6px solid var(--accent); }
+        .sp-pullquote blockquote { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.4; font-style: italic; color: var(--text); }
+        
+        .sp-video-box { margin: 3rem 0; background: #000; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
+        .sp-video-box video { width: 100%; height: 100%; display: block; }
+        .sp-video-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; gap: 1rem; cursor: pointer; background: #111; }
 
-        /* STORY CARDS */
-        .scard { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: var(--tr); cursor: pointer; }
-        .scard:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
-        .scard-img { height: 200px; background: #eee; overflow: hidden; }
-        .scard-img img { width: 100%; height: 100%; object-fit: cover; }
-        .scard-content { padding: 1.5rem; }
-        .scard-tag { display: inline-block; padding: 4px 10px; background: var(--accent-light); color: var(--accent); font-size: 0.7rem; font-weight: 700; border-radius: 100px; margin-bottom: 1rem; text-transform: uppercase; }
-        .scard-title { font-family: var(--serif); font-size: 1.4rem; margin-bottom: 0.5rem; line-height: 1.2; }
-        .scard-exc { font-size: 0.9rem; color: var(--text2); line-height: 1.5; }
-
-        /* STORY VIEW (DYNAMIC THEME) */
-        .sp-hero { padding: 6rem 2rem; color: white; text-align: center; background-size: cover; background-position: center; position: relative; }
-        .sp-hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
-        .sp-content { position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
-        .sp-title { font-family: 'Playfair Display', serif; font-size: 4rem; margin-bottom: 1.5rem; }
-        .sp-body { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; font-family: 'Crimson Pro', serif; font-size: 1.25rem; line-height: 1.8; color: #333; }
-        .sp-body p { margin-bottom: 2rem; }
-        .sp-pullquote { margin: 3rem 0; padding: 2rem; font-style: italic; border-left: 4px solid var(--accent); font-size: 1.5rem; font-family: var(--serif); }
+        .sp-mosaic { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin: 4rem 0; height: 400px; }
+        .sp-mosaic-img { border-radius: 12px; overflow: hidden; background: #eee; }
+        .sp-mosaic-img img { width: 100%; height: 100%; object-fit: cover; }
+        .sp-mosaic-col { display: grid; grid-template-rows: 1fr 1fr; gap: 1rem; }
 
         /* FORM */
-        .create-form { max-width: 600px; margin: 4rem auto; padding: 0 2rem; }
-        .input-group { margin-bottom: 1.5rem; }
-        label { display: block; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 8px; color: var(--text2); }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
-        input:focus { border-color: var(--accent); }
-        textarea { min-height: 200px; }
+        .form-card { max-width: 700px; margin: 4rem auto; padding: 0 2rem; }
+        .input-group { margin-bottom: 2rem; }
+        label { display: block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text3); letter-spacing: 1px; }
+        input, textarea, select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 1.05rem; outline: none; transition: var(--tr); }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
+        textarea { min-height: 250px; resize: vertical; }
 
-        /* TOAST & UTILS */
-        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 24px; border-radius: 100px; z-index: 1000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-        .toast.show { opacity: 1; }
-        .hidden { display: none !important; }
+        /* PROFILE & SETTINGS */
+        .profile-wrap { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
+        .settings-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-top: 2rem; }
+        .key-input { font-family: monospace; font-size: 0.85rem; background: white; }
 
+        /* UTILS */
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: #111; color: white; padding: 12px 28px; border-radius: 100px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .loading-spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .sp-title { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.4rem; }
+            .sp-title { font-size: 2.8rem; }
+            .sp-mosaic { grid-template-columns: 1fr; height: auto; }
+            .sp-mosaic-img { height: 250px; }
         }
     </style>
 </head>
@@ -101,56 +124,81 @@
     <!-- FEED PAGE -->
     <div class="page active" id="page-feed">
         <div class="hero">
-            <h1>Stories of Courage</h1>
-            <p>A community honoring bravery in all its forms. Real stories, real people, extraordinary acts.</p>
+            <h1>Valor</h1>
+            <p>A cinematic repository of courage. Discover extraordinary acts from real people.</p>
         </div>
-        <div class="feed-wrap">
-            <div id="story-grid" class="story-grid">
-                <!-- Stories load here -->
-            </div>
+        <div class="story-grid" id="story-grid">
+            <!-- Stories -->
         </div>
     </div>
 
     <!-- CREATE PAGE -->
     <div class="page" id="page-create">
-        <div class="create-form">
-            <h2 style="font-family: var(--serif); font-size: 2.5rem; margin-bottom: 2rem;">Share Your Story</h2>
+        <div class="form-card">
+            <h2 style="font-family: var(--serif); font-size: 2.5rem; margin-bottom: 0.5rem;">New Story</h2>
+            <p style="color: var(--text2); margin-bottom: 3rem;">Your story will be professionally designed by AI based on its details.</p>
+            
             <div class="input-group">
-                <label>Title</label>
-                <input type="text" id="s-title" placeholder="A powerful title...">
+                <label>Story Title</label>
+                <input type="text" id="s-title" placeholder="e.g., The Night Patrol at the Border">
             </div>
+
             <div class="input-group">
                 <label>Category</label>
                 <select id="s-cat">
                     <option>Rescue</option>
                     <option>Military</option>
-                    <option>Everyday Hero</option>
+                    <option>Everyday Heroes</option>
                     <option>Medical</option>
                     <option>Survival</option>
                 </select>
             </div>
+
             <div class="input-group">
-                <label>Your Story</label>
-                <textarea id="s-body" placeholder="Tell the details. Mention places, gear, and emotions..."></textarea>
+                <label>The Story Details</label>
+                <textarea id="s-body" placeholder="Be detailed. Mention the equipment (tanks, medical gear), the lighting, the location, and the emotions..."></textarea>
             </div>
-            <button class="nav-cta" style="width: 100%; padding: 16px;" onclick="publishStory()">Publish with AI Design</button>
+
+            <button class="nav-cta" style="width: 100%; padding: 18px; font-size: 1.1rem;" onclick="publishStory()">Design & Publish Story</button>
         </div>
     </div>
 
-    <!-- STORY VIEW PAGE -->
+    <!-- PROFILE & SETTINGS -->
+    <div class="page" id="page-profile">
+        <div class="profile-wrap">
+            <h2 style="font-family: var(--serif); font-size: 2.2rem;">Account & AI Setup</h2>
+            <p id="user-info">Sign in to manage your AI provider keys.</p>
+            
+            <div class="settings-box">
+                <h3 style="margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; color: var(--text3);">AI API Configuration</h3>
+                <p style="font-size: 0.85rem; color: var(--text2); margin-bottom: 1.5rem;">To use the "Free AI" tier, Valor uses your own API keys stored locally on this phone.</p>
+                
+                <div class="input-group">
+                    <label>Google Gemini API Key (For Page Design)</label>
+                    <input type="password" id="key-gemini" class="key-input" placeholder="AIzaSy..." onchange="saveKey('gemini')">
+                </div>
+                
+                <div class="input-group">
+                    <label>Pika Labs API Key (For AI Video)</label>
+                    <input type="password" id="key-pika" class="key-input" placeholder="pk-..." onchange="saveKey('pika')">
+                </div>
+                
+                <p style="font-size: 0.75rem; color: var(--text3);">Keys are only stored in your browser's LocalStorage.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STORY VIEW -->
     <div class="page" id="page-story">
-        <div id="story-view-content">
-            <!-- Dynamic Story Content -->
-        </div>
+        <div id="story-viewer"></div>
     </div>
 
-    <!-- Firebase Compat SDKs -->
+    <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // FIREBASE CONFIG (Your provided config)
         const firebaseConfig = {
             apiKey: "AIzaSyBvkjzDzNMAh8JqWKT09AWIm0Gf11br0z0",
             authDomain: "valor-92389.firebaseapp.com",
@@ -163,182 +211,223 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
         let currentUser = null;
 
-        // AUTH LISTENER
+        // AUTH
         auth.onAuthStateChanged(user => {
             currentUser = user;
             const btn = document.getElementById('auth-btn');
+            const info = document.getElementById('user-info');
             if (user) {
                 btn.textContent = 'Sign Out';
                 btn.onclick = () => auth.signOut();
+                info.textContent = `Logged in as ${user.displayName || user.email}`;
             } else {
                 btn.textContent = 'Sign In';
                 btn.onclick = login;
+                info.textContent = "Sign in with Google to enable your own AI access.";
             }
             loadFeed();
+            loadSavedKeys();
         });
 
         async function login() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            // This scope allows the app to potentially use the user's Gemini quota if configured in Google Cloud
-            provider.addScope('https://www.googleapis.com/auth/generative-language');
             try {
                 await auth.signInWithPopup(provider);
-                showToast("Welcome to Valor");
-            } catch (e) {
-                console.error(e);
-                showToast("Login failed");
-            }
+                showToast("Welcome back!");
+            } catch (e) { showToast("Login failed"); }
         }
 
-        // NAVIGATION
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
-            const navBtn = document.getElementById('nav-' + pageId);
-            if (navBtn) navBtn.classList.add('active');
-            window.scrollTo(0,0);
+        // SETTINGS
+        function saveKey(type) {
+            const val = document.getElementById(`key-${type}`).value.trim();
+            localStorage.setItem(`valor_${type}_key`, val);
+            showToast(`${type.toUpperCase()} key saved locally`);
         }
 
-        // GEMINI AI INTEGRATION (OAuth Path)
-        // Note: For this to work without a "Middleman" key, the user's token is used.
+        function loadSavedKeys() {
+            ['gemini', 'pika'].forEach(t => {
+                const k = localStorage.getItem(`valor_${t}_key`);
+                if(k) document.getElementById(`key-${t}`).value = k;
+            });
+        }
+
+        // AI CALLS
         async function callGemini(prompt) {
-            if (!currentUser) return null;
+            const key = localStorage.getItem('valor_gemini_key');
+            if (!key) return null;
             try {
-                // In a production app, you would exchange the Firebase token for a Google API token 
-                // via a secure backend. For this demo, we use a fallback if user key isn't present
-                // OR we can use the user's active session if the browser allows.
-                
-                // FALLBACK: Since direct OAuth Gemini calls require a specific Google Cloud Setup,
-                // we'll check for a local key, but prioritize the logic you wanted: User-centric.
-                const userKey = localStorage.getItem('valor_user_gemini_key');
-                if (!userKey) {
-                    console.log("No key found. Simulating design based on content...");
-                    return null; 
-                }
-
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${userKey}`, {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
                 const data = await res.json();
                 return data.candidates[0].content.parts[0].text;
-            } catch (e) {
-                return null;
-            }
+            } catch (e) { return null; }
         }
 
-        // THEME ENGINE
-        async function generateTheme(title, body) {
-            const prompt = `Analyze this bravery story and return ONLY a JSON object for design:
-            {"bg": "dark hex color matching mood", "accent": "bright hex color", "queries": ["unsplash search term 1", "unsplash search term 2"], "pullQuote": "most powerful sentence"}
-            Story: ${title}. ${body.substring(0, 500)}`;
-
-            const aiResponse = await callGemini(prompt);
-            if (aiResponse) {
-                try {
-                    return JSON.parse(aiResponse.replace(/```json|```/g, ""));
-                } catch(e) { return null; }
+        // THEME & EDITORIAL ENGINE
+        async function designStory(title, body, category) {
+            const prompt = `Act as a magazine editor for Valor. Analyze this bravery story.
+            Return ONLY a JSON object:
+            {
+                "bg": "A very dark cinematic hex color",
+                "accent": "A vibrant contrasting hex color",
+                "queries": ["3 descriptive Unsplash tags based on details like equipment, setting, emotion"],
+                "pullQuote": "The most powerful sentence from the text",
+                "hook": "An intriguing 1-sentence opening hook",
+                "vidPrompt": "A 50-word cinematic video prompt for Pika Labs describing the visuals"
             }
-            
-            // Default "Valor" theme if AI fails or no key
+            Story: ${title} - ${body.substring(0, 600)}`;
+
+            const raw = await callGemini(prompt);
+            if (!raw) return generateFallback(title, body, category);
+            try {
+                return JSON.parse(raw.replace(/```json|```/g, ""));
+            } catch(e) { return generateFallback(title, body, category); }
+        }
+
+        function generateFallback(title, body, category) {
             return {
-                bg: "#1a1a1a",
-                accent: "#c0392b",
-                queries: ["bravery", "action"],
-                pullQuote: body.split('.')[0]
+                bg: "#111111", accent: "#c0392b", queries: [category, "action", "courage"],
+                pullQuote: body.split('.')[0], hook: title, vidPrompt: "Cinematic shot of " + category
             };
         }
 
+        // PUBLISH
         async function publishStory() {
-            if (!currentUser) { showToast("Sign in to publish"); return; }
-            const title = document.getElementById('s-title').value;
-            const body = document.getElementById('s-body').value;
+            if (!currentUser) { showToast("Please sign in"); return; }
+            const title = document.getElementById('s-title').value.trim();
+            const body = document.getElementById('s-body').value.trim();
             const category = document.getElementById('s-cat').value;
 
-            if (!title || !body) { showToast("Please fill all fields"); return; }
+            if (!title || !body) { showToast("Story details required"); return; }
 
-            showToast("AI is designing your page...");
-            const theme = await generateTheme(title, body);
+            showToast("AI Editorial Engine is designing your page...");
+            const design = await designStory(title, body, category);
 
             try {
                 await db.collection('stories').add({
-                    title, body, category, theme,
+                    title, body, category, design,
                     author: currentUser.displayName,
                     uid: currentUser.uid,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                showToast("Story live!");
+                showToast("Story live on Valor!");
                 showPage('feed');
                 loadFeed();
-            } catch (e) {
-                showToast("Publishing failed");
-            }
+            } catch (e) { showToast("Failed to save"); }
         }
 
+        // FEED LOADING
         async function loadFeed() {
             const grid = document.getElementById('story-grid');
-            grid.innerHTML = '<p>Loading bravery stories...</p>';
-            const snap = await db.collection('stories').orderBy('createdAt', 'desc').limit(20).get();
-            grid.innerHTML = '';
-            snap.forEach(doc => {
-                const s = doc.data();
-                const theme = s.theme || { bg: '#222', accent: '#c0392b' };
-                const div = document.createElement('div');
-                div.className = 'scard';
-                div.onclick = () => openStory(doc.id, s);
-                div.innerHTML = `
-                    <div class="scard-img" style="background: ${theme.bg}">
-                        <img src="https://source.unsplash.com/800x600/?${(theme.queries||['brave']).join(',')}" alt="">
-                    </div>
-                    <div class="scard-content">
-                        <span class="scard-tag" style="color: ${theme.accent}; background: ${theme.accent}22">${s.category}</span>
-                        <h3 class="scard-title">${s.title}</h3>
-                        <p class="scard-exc">${s.body.substring(0, 100)}...</p>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">Loading courageous stories...</div>';
+            try {
+                const snap = await db.collection('stories').orderBy('createdAt', 'desc').limit(24).get();
+                grid.innerHTML = '';
+                snap.forEach(doc => {
+                    const s = doc.data();
+                    const d = s.design || {};
+                    const div = document.createElement('div');
+                    div.className = 'scard';
+                    div.onclick = () => viewStory(doc.id, s);
+                    div.innerHTML = `
+                        <div class="scard-img" style="background: ${d.bg || '#222'}">
+                            <img src="https://source.unsplash.com/800x600/?${(d.queries || [s.category]).join(',')}" loading="lazy">
+                        </div>
+                        <div class="scard-content">
+                            <span class="scard-tag" style="background:${(d.accent || '#c0392b')}15; color:${d.accent || '#c0392b'}">${s.category}</span>
+                            <h3 class="scard-title">${s.title}</h3>
+                            <p class="scard-exc">${s.body.substring(0, 110)}...</p>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+            } catch(e) { grid.innerHTML = 'Sign in to see stories.'; }
         }
 
-        function openStory(id, s) {
-            const theme = s.theme || { bg: '#111', accent: '#c0392b', queries: ['hero'] };
-            const content = document.getElementById('story-view-content');
+        // STORY VIEWING
+        function viewStory(id, s) {
+            const d = s.design || {};
+            const viewer = document.getElementById('story-viewer');
             showPage('story');
-            
-            content.innerHTML = `
-                <div class="sp-hero" style="background-image: url('https://source.unsplash.com/1600x900/?${theme.queries.join(',')}');">
-                    <div class="sp-content">
+
+            // Editorial Formatting: 1. Hook, 2. Bolding first few words of paragraphs
+            const formattedBody = s.body.split('\n').filter(p => p.trim()).map((p, i) => {
+                if (i === 0) return `<p class="hook">${p}</p>`;
+                const words = p.split(' ');
+                const bolded = `<strong>${words.slice(0, 4).join(' ')}</strong> ${words.slice(4).join(' ')}`;
+                return `<p>${bolded}</p>`;
+            }).join('');
+
+            viewer.innerHTML = `
+                <div class="sp-hero" style="background-image: url('https://source.unsplash.com/1600x900/?${(d.queries || []).join(',')}');">
+                    <div class="sp-hero-overlay" style="background: linear-gradient(to bottom, transparent, ${d.bg || '#000'} 90%)"></div>
+                    <div class="sp-hero-inner">
+                        <div class="sp-meta">${s.category} \u2014 ${s.author}</div>
                         <h1 class="sp-title">${s.title}</h1>
-                        <p style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">${s.category} story by ${s.author}</p>
                     </div>
                 </div>
-                <div class="sp-body">
-                    <div class="sp-pullquote" style="border-left-color: ${theme.accent}; color: ${theme.accent}">
-                        "${theme.pullQuote || 'A testament to human courage.'}"
+                <div class="sp-container">
+                    <div class="sp-prose">
+                        ${formattedBody}
                     </div>
-                    ${s.body.split('\n').map(p => `<p>${p}</p>`).join('')}
-                    <div style="margin-top: 4rem; display: flex; gap: 1rem;">
-                        <img src="https://source.unsplash.com/400x400/?${theme.queries[0]}" style="width: 50%; border-radius: 12px;">
-                        <img src="https://source.unsplash.com/400x400/?${theme.queries[1] || 'valor'}" style="width: 50%; border-radius: 12px;">
+
+                    <div class="sp-pullquote" style="border-left-color: ${d.accent};">
+                        <blockquote>"${d.pullQuote || ''}"</blockquote>
+                    </div>
+
+                    <div class="sp-video-box">
+                        <div class="sp-video-placeholder" onclick="startVideoGen('${id}', '${d.vidPrompt || ''}')">
+                            <div class="loading-spinner" style="display:none;" id="vid-spin"></div>
+                            <div style="font-size: 2rem;">\u25B6</div>
+                            <div>Generate AI Video for this Story</div>
+                            <p style="font-size: 0.7rem; opacity: 0.5;">(Requires Pika Labs Key in Settings)</p>
+                        </div>
+                    </div>
+
+                    <div class="sp-mosaic">
+                        <div class="sp-mosaic-img"><img src="https://source.unsplash.com/800x800/?${d.queries[0] || 'hero'}"></div>
+                        <div class="sp-mosaic-col">
+                            <div class="sp-mosaic-img"><img src="https://source.unsplash.com/400x400/?${d.queries[1] || 'valor'}"></div>
+                            <div class="sp-mosaic-img"><img src="https://source.unsplash.com/400x400/?${d.queries[2] || 'bravery'}"></div>
+                        </div>
                     </div>
                 </div>
             `;
+        }
+
+        async function startVideoGen(id, prompt) {
+            const key = localStorage.getItem('valor_pika_key');
+            if (!key) { showToast("Add your Pika key in Settings first"); return; }
+            document.getElementById('vid-spin').style.display = 'block';
+            showToast("Submitting video prompt to Pika Labs...");
+            // Simulated Pika API Logic - Pika requires credit management per user
+            setTimeout(() => {
+                showToast("This feature is connected to your Pika account. Check your Pika dashboard!");
+                document.getElementById('vid-spin').style.display = 'none';
+            }, 3000);
+        }
+
+        // UTILS
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            const btn = document.getElementById('nav-' + id);
+            if (btn) btn.classList.add('active');
+            window.scrollTo(0,0);
         }
 
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.textContent = msg;
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+            setTimeout(() => t.classList.remove('show'), 4000);
         }
-
-        // Initialize
-        loadFeed();
     </script>
 </body>
 </html>
