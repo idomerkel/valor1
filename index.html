@@ -1,317 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valor — Bravery Stories</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #ffffff; --bg2: #f8f7f4; --bg3: #f0efe9;
-            --text: #111111; --text2: #555550; --text3: #99998f;
-            --border: #e5e4de; --border2: #d0cfc8;
-            --accent: #c0392b; --accent-hover: #a93226; --accent-light: #fdf0ef;
-            --radius: 14px; --radius-sm: 9px;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --sans: 'DM Sans', system-ui, sans-serif;
-            --tr: all .18s cubic-bezier(.4,0,.2,1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valor — Bravery Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f0efe9;
+  --text:#111111;--text2:#555550;--text3:#99998f;
+  --border:#e5e4de;--border2:#d0cfc8;
+  --accent:#c0392b;--accent-hover:#a93226;--accent-light:#fdf0ef;--accent-mid:#e8a090;
+  --radius:18px;--radius-sm:10px;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --tr:all .22s cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.hidden{display:none!important;}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--sans); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:64px;}
+.nav-logo{font-family:var(--serif);font-size:1.6rem;color:var(--text);display:flex;align-items:center;gap:10px;cursor:pointer;}
+.logo-mark{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;}
+.nav-links{display:flex;gap:4px;}
+.nav-btn{padding:8px 14px;border-radius:10px;font-size:.9rem;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:none;transition:var(--tr);}
+.nav-btn.active{background:var(--accent-light);color:var(--accent);}
+.nav-cta{padding:9px 22px;background:var(--accent);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:var(--tr);}
 
-        /* NAVIGATION */
-        nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.94); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.75rem; height: 64px; }
-        .nav-logo { font-family: var(--serif); font-size: 1.6rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; }
-        .nav-links { display: flex; gap: 4px; }
-        .nav-btn { padding: 8px 14px; border-radius: 8px; border: none; background: none; font-weight: 500; cursor: pointer; color: var(--text2); transition: var(--tr); }
-        .nav-btn.active { background: var(--accent-light); color: var(--accent); }
-        .nav-cta { padding: 8px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: var(--tr); }
+/* PAGES */
+.page{display:none;min-height:calc(100vh - 64px);}
+.page.active{display:block;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:translateY(0);} }
 
-        /* PAGES */
-        .page { display: none; min-height: calc(100vh - 64px); }
-        .page.active { display: block; }
+/* HERO */
+.feed-hero{background:#0a0a0a;padding:6rem 2rem;text-align:center;color:white;}
+.feed-hero h1{font-family:var(--serif);font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.1;margin-bottom:1rem;}
+.feed-hero p{color:rgba(255,255,255,0.5);max-width:500px;margin:0 auto 2.5rem;font-size:1.1rem;}
 
-        /* FEED */
-        .hero { background: #0a0a0a; color: white; padding: 6rem 2rem; text-align: center; }
-        .hero h1 { font-family: var(--serif); font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero p { color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
-        .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+/* CARDS */
+.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2.5rem;max-width:1200px;margin:3rem auto;padding:0 1.5rem;}
+.scard{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--tr);cursor:pointer;}
+.scard:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,0.1);}
+.scard-media{height:220px;background:#111;overflow:hidden;}
+.scard-thumb{width:100%;height:100%;object-fit:cover;}
+.scard-content{padding:1.75rem;}
+.scard-tag{display:inline-block;padding:4px 12px;background:var(--accent-light);color:var(--accent);font-size:.75rem;font-weight:700;border-radius:100px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:1px;}
+.scard-title{font-family:var(--serif);font-size:1.4rem;line-height:1.25;margin-bottom:.75rem;}
 
-        /* CARDS */
-        .scard { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: var(--tr); cursor: pointer; display: flex; flex-direction: column; }
-        .scard-img { height: 220px; background: #222; overflow: hidden; }
-        .scard-img img { width: 100%; height: 100%; object-fit: cover; }
-        .scard-content { padding: 1.75rem; }
-        .scard-title { font-family: var(--serif); font-size: 1.45rem; margin-bottom: 0.5rem; }
+/* STORY VIEW */
+.sp-hero{position:relative;min-height:75vh;display:flex;align-items:center;justify-content:center;text-align:center;color:white;padding:10rem 2rem;}
+.sp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.sp-hero-overlay{position:absolute;inset:0;}
+.sp-hero-inner{position:relative;z-index:10;max-width:900px;}
+.sp-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,5rem);line-height:1;margin-bottom:1.5rem;text-shadow:0 4px 30px rgba(0,0,0,0.5);}
+.sp-meta{font-weight:600;text-transform:uppercase;letter-spacing:3px;font-size:.85rem;opacity:0.8;margin-bottom:10px;display:block;}
 
-        /* STORY VIEW (DYNAMC) */
-        .sp-hero { position: relative; padding: 8rem 2rem; color: white; text-align: center; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; min-height: 65vh; }
-        .sp-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.9)); }
-        .sp-hero-inner { position: relative; z-index: 10; max-width: 900px; }
-        .sp-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
-        
-        .sp-container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
-        .sp-prose { font-family: 'Crimson Pro', serif; font-size: 1.4rem; line-height: 1.8; color: #333; }
-        .sp-prose .hook { font-size: 1.7rem; font-style: italic; color: #000; margin-bottom: 3rem; border-left: 4px solid var(--accent); padding-left: 1.5rem; }
-        .sp-prose strong { color: #000; }
+.sp-container{max-width:850px;margin:0 auto;padding:5rem 2rem;}
+.sp-prose{font-family:'Crimson Pro',serif;font-size:1.45rem;line-height:2;color:#2a2a2a;}
+.sp-prose .hook{font-size:1.75rem;font-style:italic;color:#000;margin-bottom:3.5rem;border-left:5px solid var(--accent);padding-left:2rem;}
+.sp-prose p{margin-bottom:2rem;}
 
-        .sp-pullquote { margin: 4rem -2rem; padding: 3rem; background: var(--bg2); border-left: 8px solid var(--accent); }
-        .sp-pullquote blockquote { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; }
+.sp-pullquote{margin:4rem -3rem;padding:4rem;background:var(--bg2);border-left:10px solid var(--accent);border-radius:4px;}
+.sp-pullquote blockquote{font-family:'Playfair Display',serif;font-size:2.2rem;line-height:1.4;font-style:italic;}
 
-        .sp-mosaic { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin: 4rem 0; height: 450px; }
-        .sp-mosaic-img { border-radius: 12px; overflow: hidden; background: #eee; }
-        .sp-mosaic-img img { width: 100%; height: 100%; object-fit: cover; }
-        .sp-mosaic-col { display: grid; grid-template-rows: 1fr 1fr; gap: 1rem; }
+.sp-video-box{margin:4rem 0;background:#000;border-radius:var(--radius);overflow:hidden;aspect-ratio:16/9;box-shadow:0 30px 60px rgba(0,0,0,0.3);}
+.sp-video-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;gap:1.5rem;cursor:pointer;background:#080808;transition:var(--tr);}
+.sp-video-placeholder:hover{background:#111;}
 
-        /* FORM */
-        .form-card { max-width: 700px; margin: 4rem auto; padding: 0 2rem; }
-        .input-group { margin-bottom: 2rem; }
-        label { display: block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text3); }
-        textarea { width: 100%; min-height: 300px; padding: 15px; border-radius: 10px; border: 1px solid var(--border); font-size: 1.1rem; outline: none; }
+.sp-mosaic{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin:5rem 0;height:450px;}
+.sp-mosaic-img{border-radius:12px;overflow:hidden;background:#eee;}
+.sp-mosaic-img img{width:100%;height:100%;object-fit:cover;}
+.sp-mosaic-col{display:grid;grid-template-rows:1fr 1fr;gap:1.5rem;}
 
-        /* TOAST */
-        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #111; color: white; padding: 12px 24px; border-radius: 100px; z-index: 1000; display: none; }
-    </style>
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:white;padding:12px 28px;border-radius:100px;font-weight:600;z-index:1000;opacity:0;transition:all 0.3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-logo" onclick="showPage('feed')"><div class="logo-mark">V</div> Valor</div>
-        <div class="nav-links">
-            <button class="nav-btn active" id="nav-feed" onclick="showPage('feed')">Stories</button>
-            <button class="nav-btn" id="nav-create" onclick="showPage('create')">Create</button>
-            <button class="nav-btn" id="nav-profile" onclick="showPage('profile')">Profile</button>
-        </div>
-        <button class="nav-cta" id="auth-btn" onclick="login()">Sign In</button>
-    </nav>
+<nav>
+  <div class="nav-logo" onclick="showPage('feed')"><div class="logo-mark">V</div> Valor</div>
+  <div class="nav-links">
+    <button class="nav-btn active" id="nav-feed" onclick="showPage('feed')">Stories</button>
+    <button class="nav-btn" id="nav-create" onclick="showPage('create')">Create</button>
+    <button class="nav-btn" id="nav-profile" onclick="showPage('profile')">Profile</button>
+  </div>
+  <button class="nav-cta" id="auth-btn" onclick="login()">Sign In</button>
+</nav>
 
-    <div id="toast" class="toast"></div>
+<div id="toast" class="toast"></div>
 
-    <div class="page active" id="page-feed">
-        <div class="hero">
-            <h1>Valor</h1>
-            <p>Intelligence-driven visual stories of extraordinary bravery.</p>
-        </div>
-        <div class="story-grid" id="story-grid"></div>
+<!-- FEED -->
+<div class="page active" id="page-feed">
+  <div class="feed-hero">
+    <h1>VALOR</h1>
+    <p>Honoring bravery through cinematic storytelling. Every narrative is automatically designed by AI.</p>
+  </div>
+  <div class="story-grid" id="story-grid"></div>
+</div>
+
+<!-- CREATE -->
+<div class="page" id="page-create">
+  <div style="max-width:750px;margin:4rem auto;padding:0 2rem;">
+    <h2 style="font-family:var(--serif);font-size:3rem;margin-bottom:1rem;letter-spacing:-1.5px;">New Story</h2>
+    <p style="color:var(--text2);margin-bottom:3rem;font-size:1.1rem;">Our AI Context Engine will scan your words to identify equipment, locations, and moods to design your page instantly.</p>
+    
+    <div style="margin-bottom:2rem;">
+      <label style="display:block;font-weight:800;font-size:.8rem;text-transform:uppercase;margin-bottom:10px;color:var(--text3);letter-spacing:1px;">Title</label>
+      <input type="text" id="s-title" style="width:100%;padding:18px;border-radius:12px;border:2px solid var(--border);font-size:1.1rem;outline:none;" placeholder="Operation Nightshade">
     </div>
 
-    <div class="page" id="page-create">
-        <div class="form-card">
-            <h2 style="font-family: var(--serif); font-size: 2.5rem; margin-bottom: 1rem;">Share Your Story</h2>
-            <div class="input-group">
-                <label>Story Title</label>
-                <input type="text" id="s-title" style="width:100%; padding:15px; border-radius:10px; border:1px solid var(--border);" placeholder="Title of the event...">
-            </div>
-            <div class="input-group">
-                <label>Type of Story</label>
-                <select id="s-cat" style="width:100%; padding:15px; border-radius:10px; border:1px solid var(--border);">
-                    <option>Military</option>
-                    <option>Rescue</option>
-                    <option>Medical</option>
-                    <option>Survival</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>The Narrative (AI will scan for keywords)</label>
-                <textarea id="s-body" placeholder="Describe the event. Our engine will automatically find the keywords like tanks, night ops, or gear..."></textarea>
-            </div>
-            <button class="nav-cta" style="width:100%; padding:20px; font-size:1.1rem;" onclick="publishStory()">Analyze & Publish Story</button>
+    <div style="margin-bottom:2rem;">
+      <label style="display:block;font-weight:800;font-size:.8rem;text-transform:uppercase;margin-bottom:10px;color:var(--text3);letter-spacing:1px;">Category</label>
+      <select id="s-cat" style="width:100%;padding:18px;border-radius:12px;border:2px solid var(--border);font-size:1.1rem;background:white;">
+        <option>Military</option>
+        <option>Rescue</option>
+        <option>Medical</option>
+        <option>Survival</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <label style="display:block;font-weight:800;font-size:.8rem;text-transform:uppercase;margin-bottom:10px;color:var(--text3);letter-spacing:1px;">The Narrative</label>
+      <textarea id="s-body" style="width:100%;padding:18px;border-radius:12px;border:2px solid var(--border);font-size:1.1rem;min-height:350px;outline:none;" placeholder="Tell the details. Mention the tanks, the darkness of night, the desert dust, and the emotions..."></textarea>
+    </div>
+
+    <button class="nav-cta" style="width:100%;padding:22px;font-size:1.2rem;border-radius:15px;" onclick="publishStory()">Design & Publish Narrative</button>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div class="page" id="page-profile">
+  <div style="max-width:800px;margin:4rem auto;padding:0 2rem;">
+    <h2 style="font-family:var(--serif);font-size:2.5rem;margin-bottom:2rem;">Intelligence Access</h2>
+    <div style="background:var(--bg2);padding:3rem;border-radius:20px;border:1px solid var(--border);">
+      <p id="user-info" style="margin-bottom:2rem;font-weight:600;">Sign in with Google to sync your narratives.</p>
+      <label style="display:block;font-weight:800;font-size:.7rem;text-transform:uppercase;margin-bottom:8px;color:var(--text3);">Personal Gemini API Key (Optional)</label>
+      <input type="password" id="key-gemini" placeholder="AIzaSy..." style="width:100%;padding:15px;border-radius:10px;border:1px solid var(--border);margin-bottom:1.5rem;" onchange="saveKey('gemini')">
+      
+      <label style="display:block;font-weight:800;font-size:.7rem;text-transform:uppercase;margin-bottom:8px;color:var(--text3);">Personal Pika Labs API Key (Optional)</label>
+      <input type="password" id="key-pika" placeholder="pk-..." style="width:100%;padding:15px;border-radius:10px;border:1px solid var(--border);" onchange="saveKey('pika')">
+      
+      <p style="font-size:.8rem;color:var(--text3);margin-top:2rem;">Valor uses your local device keys to process high-end AI designs without a middleman.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-story">
+  <div id="story-viewer"></div>
+</div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBvkjzDzNMAh8JqWKT09AWIm0Gf11br0z0",
+  authDomain: "valor-92389.firebaseapp.com",
+  projectId: "valor-92389",
+  storageBucket: "valor-92389.firebasestorage.app",
+  messagingSenderId: "257185389808",
+  appId: "1:257185389808:web:f564b6fb9a86de5f3f7635"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+let currentUser = null;
+
+// AUTH
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+  const btn = document.getElementById('auth-btn');
+  if (user) {
+    btn.textContent = 'Sign Out';
+    btn.onclick = () => auth.signOut();
+    document.getElementById('user-info').textContent = `Authenticated as ${user.displayName || user.email}`;
+  } else {
+    btn.textContent = 'Sign In';
+    btn.onclick = login;
+  }
+  loadFeed();
+  loadSavedKeys();
+});
+
+async function login() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try { await auth.signInWithPopup(provider); showToast("Welcome back"); } catch (e) { showToast("Login failed"); }
+}
+
+function saveKey(type) {
+  localStorage.setItem(`valor_${type}_key`, document.getElementById(`key-${type}`).value.trim());
+  showToast(`${type.toUpperCase()} key secured locally`);
+}
+
+function loadSavedKeys() {
+  ['gemini', 'pika'].forEach(t => {
+    const k = localStorage.getItem(`valor_${t}_key`);
+    if(k && document.getElementById(`key-${t}`)) document.getElementById(`key-${t}`).value = k;
+  });
+}
+
+// ── CONTEXTUAL AI ENGINE (Scans Story) ──
+function getStoryIntelligence(title, body, category) {
+  const text = (title + " " + body).toLowerCase();
+  
+  // VALOR CONSTANTS
+  let design = {
+    bg: "#0a0a0a", accent: "#c0392b", overlay: "rgba(0,0,0,0.85)",
+    queries: ["valor", "courage", "heroism"],
+    pullQuote: body.split(/[.!?]/)[0] + "."
+  };
+
+  // Keyword Extraction (Identify nouns/descriptive terms)
+  const exclude = ['there','about','would','could','through','their'];
+  const keywords = text.split(/\W+/).filter(w => w.length > 5 && !exclude.includes(w));
+  const uniqueKeys = [...new Set(keywords)].slice(0, 4);
+
+  // ENFORCE MILITARY: Night & Tanks Mode
+  if (category === "Military" || text.includes("tank") || text.includes("soldier") || text.includes("military")) {
+    design.bg = "#030405"; // Total darkness
+    design.accent = "#32CD32"; // NVG Green
+    design.queries = ["night tank", "night vision", "combat operations"];
+    design.queries = [...new Set([...design.queries, ...uniqueKeys])];
+  } else if (category === "Rescue") {
+    design.bg = "#0d0505"; design.accent = "#FF4500";
+    design.queries = ["rescue", "firefighter", "emergency"];
+    design.queries = [...new Set([...design.queries, ...uniqueKeys])];
+  } else {
+    design.queries = [...new Set([...design.queries, ...uniqueKeys])];
+  }
+
+  return design;
+}
+
+async function designStory(title, body, category) {
+  const key = localStorage.getItem('valor_gemini_key');
+  if (!key) return getStoryIntelligence(title, body, category);
+
+  try {
+    const prompt = `Return ONLY JSON: {"bg":"hex","accent":"hex","queries":["4 tags"],"pullQuote":"quote","hook":"hook"} for story: ${title}. If Military, force visual theme to Night and Tanks. Text: ${body.substring(0,400)}`;
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    const data = await res.json();
+    const ai = JSON.parse(data.candidates[0].content.parts[0].text.replace(/```json|```/g, ""));
+    return { ...ai, overlay: "rgba(0,0,0,0.88)" };
+  } catch (e) { return getStoryIntelligence(title, body, category); }
+}
+
+async function publishStory() {
+  if (!currentUser) { showToast("Sign in required"); return; }
+  const title = document.getElementById('s-title').value.trim();
+  const body = document.getElementById('s-body').value.trim();
+  const category = document.getElementById('s-cat').value;
+
+  if (!title || !body) { showToast("Missing details"); return; }
+
+  showToast("Intelligence Engine is designing your page...");
+  const design = await designStory(title, body, category);
+
+  try {
+    await db.collection('stories').add({
+      title, body, category, design,
+      author: currentUser.displayName, uid: currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast("Story Successfully Published");
+    showPage('feed');
+    loadFeed();
+  } catch (e) { showToast("Error saving story"); }
+}
+
+async function loadFeed() {
+  const grid = document.getElementById('story-grid');
+  grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #999;">Scanning for valor...</div>';
+  try {
+    const snap = await db.collection('stories').orderBy('createdAt', 'desc').get();
+    grid.innerHTML = '';
+    snap.forEach(doc => {
+      const s = doc.data();
+      const d = s.design || {};
+      const div = document.createElement('div');
+      div.className = 'scard';
+      div.onclick = () => viewStory(doc.id, s);
+      const img = `https://images.unsplash.com/featured/?${(d.queries||[]).join(',')}`;
+      div.innerHTML = `
+        <div class="scard-media" style="background:${d.bg}">
+          <img class="scard-thumb" src="${img}" loading="lazy">
         </div>
-    </div>
-
-    <div class="page" id="page-profile">
-        <div style="max-width:800px; margin:4rem auto; padding:0 2rem;">
-            <h2 style="font-family: var(--serif); font-size: 2.5rem;">Profile</h2>
-            <p id="user-info" style="margin-bottom:2rem;">Sign in to view your settings.</p>
-            <div style="background:var(--bg2); padding:2rem; border-radius:14px; border:1px solid var(--border);">
-                <h3 style="margin-bottom:1rem; font-size:0.9rem; text-transform:uppercase; color:var(--text3);">Advanced AI Access</h3>
-                <div class="input-group">
-                    <label>Gemini API Key (Optional)</label>
-                    <input type="password" id="key-gemini" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border);" onchange="saveKey('gemini')">
-                </div>
-            </div>
+        <div class="scard-content">
+          <span class="scard-tag" style="color:${d.accent}">${s.category}</span>
+          <h3 class="scard-title">${s.title}</h3>
+          <p style="font-size:.85rem;color:#666;">${s.body.substring(0, 100)}...</p>
         </div>
+      `;
+      grid.appendChild(div);
+    });
+  } catch(e) { grid.innerHTML = 'Sign in to see narratives.'; }
+}
+
+function viewStory(id, s) {
+  const d = s.design || {};
+  const viewer = document.getElementById('story-viewer');
+  showPage('story');
+
+  const paragraphs = s.body.split('\n').filter(p => p.trim()).map((p, i) => {
+    if (i === 0) return `<p class="hook">${p}</p>`;
+    const words = p.split(' ');
+    return `<p><strong>${words.slice(0, 3).join(' ')}</strong> ${words.slice(3).join(' ')}</p>`;
+  }).join('');
+
+  const imgHero = `https://images.unsplash.com/featured/?${d.queries[0]||'night'}`;
+  const img1 = `https://images.unsplash.com/featured/?${d.queries[1]||'tank'}`;
+  const img2 = `https://images.unsplash.com/featured/?${d.queries[2]||'soldier'}`;
+
+  viewer.innerHTML = `
+    <div class="sp-hero" style="background-image: url('${imgHero}');">
+      <div class="sp-hero-overlay" style="background: linear-gradient(to bottom, transparent, ${d.bg} 98%)"></div>
+      <div class="sp-hero-inner">
+        <span class="sp-meta">${s.category} — Narrative by ${s.author}</span>
+        <h1 class="sp-title">${s.title}</h1>
+      </div>
     </div>
-
-    <div class="page" id="page-story">
-        <div id="story-viewer"></div>
+    <div class="sp-container">
+      <div class="sp-prose">${paragraphs}</div>
+      <div class="sp-pullquote" style="border-left-color:${d.accent}; background:${d.accent}05;">
+        <blockquote style="color:${d.accent}">${d.pullQuote || 'A record of duty and valor.'}</blockquote>
+      </div>
+      <div class="sp-video-box">
+        <div class="sp-video-placeholder" onclick="showToast('Video generation requires Pika Key in Profile')">
+          <div style="font-size: 3.5rem; color: ${d.accent}">▶</div>
+          <div style="font-weight:900; text-transform:uppercase; letter-spacing:2px;">AI Cinematic Video</div>
+          <p style="font-size:.8rem; opacity:0.6;">Visualizing: ${d.queries.join(' + ')}</p>
+        </div>
+      </div>
+      <div class="sp-mosaic">
+        <div class="sp-mosaic-img"><img src="${imgHero}"></div>
+        <div class="sp-mosaic-col">
+          <div class="sp-mosaic-img"><img src="${img1}"></div>
+          <div class="sp-mosaic-img"><img src="${img2}"></div>
+        </div>
+      </div>
     </div>
+  `;
+}
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const btn = document.getElementById('nav-' + id);
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvkjzDzNMAh8JqWKT09AWIm0Gf11br0z0",
-            authDomain: "valor-92389.firebaseapp.com",
-            projectId: "valor-92389",
-            storageBucket: "valor-92389.firebasestorage.app",
-            messagingSenderId: "257185389808",
-            appId: "1:257185389808:web:f564b6fb9a86de5f3f7635"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        let currentUser = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
 
-        auth.onAuthStateChanged(user => {
-            currentUser = user;
-            if (user) {
-                document.getElementById('auth-btn').textContent = 'Sign Out';
-                document.getElementById('user-info').textContent = `Logged in as ${user.displayName || user.email}`;
-            }
-            loadFeed();
-            loadSavedKeys();
-        });
-
-        async function login() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            try { await auth.signInWithPopup(provider); showToast("Welcome"); } catch (e) { showToast("Login failed"); }
-        }
-
-        function saveKey(type) {
-            localStorage.setItem(`valor_${type}_key`, document.getElementById(`key-${type}`).value.trim());
-            showToast("Key saved locally");
-        }
-
-        function loadSavedKeys() {
-            const k = localStorage.getItem('valor_gemini_key');
-            if(k) document.getElementById('key-gemini').value = k;
-        }
-
-        // CONTEXTUAL AI KEYWORD ENGINE
-        function contextualKeywords(title, body, category) {
-            const text = (title + " " + body).toLowerCase();
-            
-            // 1. Identify "Valor" Constant Theme
-            let theme = {
-                bg: "#080808", accent: "#c0392b", queries: ["courage", "heroism"],
-                pullQuote: body.split(/[.!?]/)[0] + "."
-            };
-
-            // 2. Scan text for unique keywords (Longer, specific nouns)
-            const words = text.split(/\W+/).filter(w => w.length > 5);
-            const freq = {};
-            words.forEach(w => freq[w] = (freq[w] || 0) + 1);
-            const sorted = Object.keys(freq).sort((a,b) => freq[b] - freq[a]);
-            const dynamicKeywords = sorted.slice(0, 4);
-
-            // 3. Force Military Constants: Night & Tanks
-            if (category === "Military" || text.includes("soldier") || text.includes("tank")) {
-                theme.bg = "#030507"; // Dark Night
-                theme.accent = "#2ecc71"; // Night-vision green
-                theme.queries = ["night tank", "night vision", "combat"];
-                // Blend in the story's unique findings
-                theme.queries = [...new Set([...theme.queries, ...dynamicKeywords])];
-            } else if (category === "Rescue") {
-                theme.bg = "#120a0a"; theme.accent = "#e67e22";
-                theme.queries = ["fire rescue", "emergency"];
-                theme.queries = [...new Set([...theme.queries, ...dynamicKeywords])];
-            } else {
-                theme.queries = [...new Set([...theme.queries, ...dynamicKeywords])];
-            }
-
-            return theme;
-        }
-
-        async function designStory(title, body, category) {
-            const key = localStorage.getItem('valor_gemini_key');
-            if (!key) return contextualKeywords(title, body, category);
-
-            try {
-                // Actual AI call if key is present
-                const prompt = `Analyze this ${category} story for "Valor" theme. If military, always use "Night" and "Tanks" as visual motifs. Extract specific equipment/setting keywords. Return JSON: {"bg":"hex","accent":"hex","queries":["3 keywords"],"pullQuote":"quote"}. Text: ${title} - ${body.substring(0,300)}`;
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-                const data = await res.json();
-                return JSON.parse(data.candidates[0].content.parts[0].text.replace(/```json|```/g, ""));
-            } catch (e) { return contextualKeywords(title, body, category); }
-        }
-
-        async function publishStory() {
-            if (!currentUser) { showToast("Sign in first"); return; }
-            const title = document.getElementById('s-title').value;
-            const body = document.getElementById('s-body').value;
-            const category = document.getElementById('s-cat').value;
-
-            if (!title || !body) { showToast("Missing details"); return; }
-
-            showToast("Engine is scanning your story for keywords...");
-            const design = await designStory(title, body, category);
-
-            try {
-                await db.collection('stories').add({
-                    title, body, category, design,
-                    author: currentUser.displayName, uid: currentUser.uid,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showToast("Story Published!");
-                showPage('feed');
-                loadFeed();
-            } catch (e) { showToast("Error saving"); }
-        }
-
-        async function loadFeed() {
-            const grid = document.getElementById('story-grid');
-            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">Witnessing valor...</div>';
-            const snap = await db.collection('stories').orderBy('createdAt', 'desc').get();
-            grid.innerHTML = '';
-            snap.forEach(doc => {
-                const s = doc.data();
-                const d = s.design || {};
-                const div = document.createElement('div');
-                div.className = 'scard';
-                div.onclick = () => viewStory(doc.id, s);
-                div.innerHTML = `<div class="scard-img"><img src="https://source.unsplash.com/800x600/?${(d.queries||[]).join(',')}"></div>
-                    <div class="scard-content"><h3 class="scard-title">${s.title}</h3><p>${s.body.substring(0,80)}...</p></div>`;
-                grid.appendChild(div);
-            });
-        }
-
-        function viewStory(id, s) {
-            const d = s.design || {};
-            const viewer = document.getElementById('story-viewer');
-            showPage('story');
-            const paragraphs = s.body.split('\n').filter(p => p.trim()).map((p, i) => {
-                if (i === 0) return `<p class="hook">${p}</p>`;
-                return `<p><strong>${p.split(' ').slice(0, 3).join(' ')}</strong> ${p.split(' ').slice(3).join(' ')}</p>`;
-            }).join('');
-
-            viewer.innerHTML = `<div class="sp-hero" style="background-image: url('https://source.unsplash.com/1600x900/?${d.queries.join(',')}');">
-                <div class="sp-hero-overlay" style="background: linear-gradient(to bottom, transparent, ${d.bg} 95%)"></div>
-                <div class="sp-hero-inner"><span class="sp-meta">${s.category} by ${s.author}</span><h1 class="sp-title">${s.title}</h1></div></div>
-                <div class="sp-container"><div class="sp-prose">${paragraphs}</div>
-                <div class="sp-pullquote" style="border-left-color:${d.accent}"><blockquote>"${d.pullQuote}"</blockquote></div>
-                <div class="sp-mosaic">
-                    <div class="sp-mosaic-img"><img src="https://source.unsplash.com/800x800/?${d.queries[0]}"></div>
-                    <div class="sp-mosaic-col">
-                        <div class="sp-mosaic-img"><img src="https://source.unsplash.com/400x400/?${d.queries[1]}"></div>
-                        <div class="sp-mosaic-img"><img src="https://source.unsplash.com/400x400/?${d.queries[2]}"></div>
-                    </div></div></div>`;
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('page-' + id).classList.add('active');
-            const btn = document.getElementById('nav-' + id);
-            if(btn) btn.classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg; t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
-        loadFeed();
-    </script>
+loadFeed();
+</script>
 </body>
 </html>
