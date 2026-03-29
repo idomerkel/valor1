@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valor — Bravery Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* CSS remains largely the same as your source for branding consistency */
+:root {
+  --bg:#ffffff; --bg2:#f8f7f4; --text:#111111; --accent:#c0392b; --accent-light:#fdf0ef;
+  --serif:'DM Serif Display',serif; --sans:'DM Sans',sans-serif;
+}
+/* ... [Existing Styles from Source 1-6] ... */
+/* Simplified for space - keep your existing CSS blocks here */
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('feed')">Valor</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('feed')">Stories</button>
+    <button class="nav-btn" onclick="showPage('create')">Create</button>
+    <button class="nav-btn" onclick="showPage('profile')">Profile</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-cta" id="nav-auth-btn" onclick="loginWithGoogle()">Sign In</button>
+  </div>
+</nav>
+
+<div class="page active" id="page-feed">...</div>
+<div class="page" id="page-create">...</div>
+<div class="page" id="page-story">...</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+// Initialize Firebase [cite: 7]
+const firebaseConfig = {
+  apiKey: "AIzaSyBvkjzDzNMAh8JqWKT09AWIm0Gf11br0z0",
+  authDomain: "valor-92389.firebaseapp.com",
+  projectId: "valor-92389",
+  storageBucket: "valor-92389.firebasestorage.app",
+  messagingSenderId: "257185389808",
+  appId: "1:257185389808:web:f564b6fb9a86de5f3f7635"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* ── GOOGLE AUTH (No Middleman) ── */
+async function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  // Scope required for Gemini API access via user account
+  provider.addScope('https://www.googleapis.com/auth/generative-language'); 
+  try {
+    const result = await auth.signInWithPopup(provider);
+    showToast("Logged in as " + result.user.displayName);
+    showPage('feed');
+  } catch (e) {
+    console.error("Auth failed", e);
+    showToast("Google Sign-In failed.");
+  }
+}
+
+/* ── GEMINI API CALL (Using User Token) ── */
+async function callGemini(prompt, maxTokens) {
+  const user = auth.currentUser;
+  if (!user) return null;
+
+  try {
+    // Get the Access Token directly from the user's Google session 
+    const token = await user.getIdToken(); 
+    const res = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+      {
+        method: "POST",
+        headers: { 
+          "Authorization": "Bearer " + token, 
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: maxTokens || 1000, temperature: 0.7 }
+        })
+      }
+    );
+    const data = await res.json();
+    return data.candidates[0].content.parts[0].text.trim(); [cite: 17]
+  } catch(e) {
+    console.error("Gemini failed", e);
+    return null;
+  }
+}
+
+/* ── DYNAMIC STORY THEMING ── */
+async function getStoryTheme(storyId, title, category, body) {
+  // AI Prompt to emphasize "Valor" and specific details [cite: 57]
+  const prompt = `Design a visual theme for this story. Details like equipment (tanks, gear) are critical. 
+  Return JSON: {"bg":"#darkhex", "accent":"#hex", "imageQueries":["query1", "query2"]}. 
+  Queries must be specific to the story content.`;
+  
+  const raw = await callGemini(prompt, 400); [cite: 58]
+  if (!raw) return buildFallbackTheme(category, title); [cite: 61]
+  
+  try {
+    const theme = JSON.parse(raw.replace(/
+http://googleusercontent.com/immersive_entry_chip/0
+
+Would you like me to show you how to set up the **Google Cloud Console** so this code can correctly authorize your users?
